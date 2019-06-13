@@ -45,6 +45,21 @@
 	<script>
 		$(function(){
 			var socket = io.connect();
+			var $messageForm = $('#messageForm');
+			var $message = $('#message');
+			var $chat = $('#chat');
+
+			$messageForm.submit(function(e){
+				e.preventDefault();
+				socket.emit('send message', $message.val());
+				$message.val('');
+				console.log('Submitted');
+			});
+
+			socket.on('new message', function(data){
+				console.log(data.msg);
+				$chat.append('<div class = "well">'+data.msg+'</div>');
+			});
 		});
 	</script>
 </body>
