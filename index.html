@@ -9,6 +9,9 @@
 		body{
 			margin-top: 30px; 
 		}
+		#messageArea{
+			display: none;
+		}
 		.col-md-4{
 			float: left;
 			width: 30%
@@ -21,7 +24,19 @@
 </head>
 <body>
 	<div class="container">
-		<div class="row">
+		<div id="userFormArea" class="row">
+			<div class="col-md-12">
+				<form id="userForm">
+					<div class="form-group">
+						<label>Enter Username</label>
+						<input class="form-control" id="username"/>
+						<br />
+						<input type="submit" class="btn btn-primary" value="Login" />
+					</div>
+				</form>
+			</div>
+		</div>
+		<div id="messageArea" class="row">
 			<div class="col-md-4">
 				<div class="well">
 					<h3>Online Users</h3>
@@ -53,11 +68,9 @@
 				e.preventDefault();
 				socket.emit('send message', $message.val());
 				$message.val('');
-				console.log('Submitted');
 			});
 
 			socket.on('new message', function(data){
-				console.log(data.msg);
 				$chat.append('<div class = "well">'+data.msg+'</div>');
 			});
 		});
